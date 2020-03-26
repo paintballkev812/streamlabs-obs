@@ -174,10 +174,10 @@ export class FacebookService extends StatefulService<IFacebookServiceState>
   }
 
   private createLiveVideo(): Promise<string> {
-    const { title, description, game } = this.state.streamProperties;
+    const { title, description, '' } = this.state.streamProperties;
     const data = {
       method: 'POST',
-      body: JSON.stringify({ title, description, game_specs: { name: game } }),
+      body: JSON.stringify({ title, description, game_specs: { name: '' } }),
     };
 
     return platformRequest<{ stream_url: string; id: number }>(
