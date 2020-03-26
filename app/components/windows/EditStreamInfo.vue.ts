@@ -301,8 +301,7 @@ export default class EditStreamInfo extends Vue {
 
     if (await this.$refs.form.validateAndGetErrorsCount()) return;
     if (this.isFacebook && !this.channelInfo.game) {
-      this.showGameError();
-      return;
+
     }
     if (this.isSchedule) return this.scheduleStream();
     if (this.twitterIsEnabled && this.shouldPostTweet) {
