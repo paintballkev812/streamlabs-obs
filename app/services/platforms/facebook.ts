@@ -174,11 +174,19 @@ export class FacebookService extends StatefulService<IFacebookServiceState>
   }
 
   private createLiveVideo(): Promise<string> {
-    const { title, description, '' } = this.state.streamProperties;
-    const data = {
-      method: 'POST',
-      body: JSON.stringify({ title, description, game_specs: { name: '' } }),
-    };
+    const { title, description, game } = this.state.streamProperties;
+    let data;
+    if (game == null) {
+      data = {
+        method: 'POST',
+        body: JSON.stringify({ title, description }),
+      };
+    } else {
+      data = {
+        method: 'POST',
+        body: JSON.stringify({ title, description, game_specs: { name: game } }),
+      };
+    }
 
     return platformRequest<{ stream_url: string; id: number }>(
       'facebook',
@@ -243,13 +251,24 @@ export class FacebookService extends StatefulService<IFacebookServiceState>
     { title, description, game }: IFacebookChannelInfo,
   ): Promise<any> {
     const url = `${this.apiBase}/${this.state.activePage.id}/live_videos`;
-    const body = JSON.stringify({
-      title,
-      description,
-      planned_start_time: new Date(scheduledStartTime).getTime() / 1000,
-      game_specs: { name: game },
-      status: 'SCHEDULED_UNPUBLISHED',
-    });
+    let body;
+    if (game == null) {
+      body = JSON.stringify({
+        title,
+        description,
+        planned_start_time: new Date(scheduledStartTime).getTime() / 1000,
+        status: 'SCHEDULED_UNPUBLISHED',
+      });
+    } else {
+      body = JSON.stringify({
+        title,
+        description,
+        planned_start_time: new Date(scheduledStartTime).getTime() / 1000,
+        game_specs: { name: game },
+        status: 'SCHEDULED_UNPUBLISHED',
+      });
+    }
+
     try {
       return await platformRequest('facebook', { url, body, method: 'POST' }, this.activeToken);
     } catch (e) {
@@ -311,6 +330,16 @@ export class FacebookService extends StatefulService<IFacebookServiceState>
           url: `${this.apiBase}/${this.state.liveVideoId}`,
           method: 'POST',
           body: JSON.stringify({ title, description, game_specs: { name: game } }),
+        },
+        this.state.activePage.access_token,
+      ).then(() => true);
+    } else if (this.state.liveVideoId) {
+      return platformRequest(
+        'facebook',
+        {
+          url: `${this.apiBase}/${this.state.liveVideoId}`,
+          method: 'POST',
+          body: JSON.stringify({ title, description }),
         },
         this.state.activePage.access_token,
       ).then(() => true);
