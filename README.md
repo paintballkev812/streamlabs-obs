@@ -1,4 +1,4 @@
-This is a modified version of streamlabs to allow for Facebook Live Streaming without selecting a game.
+This is a modified version of streamlabs to allow for Facebook Live Streaming without selecting a game. Pre-Built installer can be found here: https://github.com/paintballkev812/streamlabs-obs/releases
 
 # Streamlabs OBS
 
