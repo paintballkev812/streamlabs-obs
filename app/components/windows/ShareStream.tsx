@@ -24,30 +24,9 @@ interface IQRCodeData {
 
 const testimonialData = () => [
   {
-    quote: $t('I got my first group of viewers by messaging ALL my friends and family'),
-    author: 'Islandgrown',
-    img: require('../../../media/images/testimonials/islandgrown.png'),
-  },
-  {
-    quote: $t(
-      'Try to focus on each social media equally. People forget that you can build a social media presence and bring them over to your stream',
-    ),
-    author: 'DuckyTheGamer',
-    img: require('../../../media/images/testimonials/ducky.png'),
-  },
-  {
-    quote: $t(
-      'As a small streamer one of the best ways to grow is growing with your friends or other streamers. Sharing communities and such can help growth',
-    ),
-    author: 'Nate Hill',
-    img: require('../../../media/images/testimonials/natehill.png'),
-  },
-  {
-    quote: $t(
-      'Build a small following before you start streaming of like 10-20 viewers, whether they are friends, family, teammates, whatever',
-    ),
-    author: 'Dellor',
-    img: require('../../../media/images/testimonials/dellor.png'),
+    quote: $t('Click the "Go Live" button to input your stream information.'),
+    author: '',
+    img: require('../../../media/images/testimonials/blank.png'),
   },
 ];
 
@@ -190,28 +169,7 @@ export default class ShareStream extends TsxComponent<{ sharePageUrl: string }> 
   }
 
   get shareButtons() {
-    return (
-      <div class={styles.shareButtons}>
-        {!this.sharedToFacebook && (
-          <button
-            class={cx('button button--facebook', styles.shareButton)}
-            onClick={() => this.shareToFacebook()}
-          >
-            <i class="fab fa-facebook-f" />
-            {$t('Share to Facebook')}
-          </button>
-        )}
-        {!this.linkedToTwitter && !this.pressedTwitterButton && this.sharedToFacebook && (
-          <button
-            class={cx('button button--twitter', styles.shareButton)}
-            onClick={() => this.linkTwitter()}
-          >
-            <i class="fab fa-twitter" />
-            {$t('Connect to Twitter')}
-          </button>
-        )}
-      </div>
-    );
+    return <div class={styles.shareButtons}></div>;
   }
 
   get cta() {
